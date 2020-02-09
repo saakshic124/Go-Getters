@@ -1,0 +1,73 @@
+<html>
+  <head>
+    <script src="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+      crossorigin="anonymous"></script>
+    <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.css"/>
+
+    <script type="text/javascript">
+      window.onload = function() {
+        placeSearch({
+          key: 'lYrP4vF3Uk5zgTiGGuEzQGwGIVDGuy24',
+          container: document.querySelector('#search-input'),
+          useDeviceLocation: true,
+          collection: [
+            'poi',
+            'address',
+            'adminArea',
+          ]
+        }).on('change', (e)=> {
+          var lat = e.result.latlng.lat 
+          var lng = e.result.latlng.lng
+          console.log(e.result.latlng.lat);
+          const Http = new XMLHttpRequest();
+          const url="https://www.mapquestapi.com/search/v4/place?location="+lng+"%2C%20"+lat+"&sort=distance&feedback=false&key=lYrP4vF3Uk5zgTiGGuEzQGwGIVDGuy24&q='volunteering'"
+          Http.open("GET", url);
+          Http.send();
+          
+          Http.onreadystatechange = (e) => {
+            console.log("hello");
+            console.log(Http.responseText)
+            document.getElementById("map").innerHTML="Waiting"
+
+            
+          } 
+        });
+
+        $("#map").hide()
+
+        // $(document).ready(function() {
+        $("#opportunity_button").click(function() {
+          $("#map").show()
+        })
+        // })
+      }
+
+    </script>
+  </head>
+
+  <body style="border: 0; margin: 40px;">
+    <input type="search" id="search-input" placeholder="Enter your zipcode." />
+    
+    <div id="frame" class="modal">
+
+  <button id="opportunity_button" class="btn">Click here to see nearby opportunities!
+  </button>
+    <iframe id="map"src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d94450.19995208588!2d-71.24178383990906!3d42.28772822949981!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1svolunteering%20events%20in%20newton!5e0!3m2!1sen!2sus!4v1581281797694!5m2!1sen!2sus" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+
+</button>
+    
+    <span class="close">&times;</span>
+    <p>Click on the pins!</p>
+  </div>
+      
+    
+
+    </script>
+
+    </div>
+    
+  </body>
+</html>
